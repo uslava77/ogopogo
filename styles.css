@@ -157,7 +157,7 @@ nav ul li a.active {
 
 /* ---------- Hero Section ---------- */
 .hero {
-    background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('/images/hero.png'); /* Replace placeholder if you have a specific hero image */
+    background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('images/hero.png'); /* Replace placeholder if you have a specific hero image */
     background-size: cover;
     background-position: center;
     color: var(--light-bg); /* White text on hero */
