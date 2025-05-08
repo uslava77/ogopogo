@@ -1,6 +1,5 @@
-/* 
-*  Ogopogo Coatings - Main Stylesheet
-*  A professional stylesheet for the Ogopogo Coatings website
+/* * Ogopogo Coatings - Main Stylesheet
+* A professional stylesheet for the Ogopogo Coatings website
 */
 
 /* ---------- Base Styles ---------- */
@@ -11,18 +10,25 @@
 }
 
 :root {
-    --primary-color: #1e3a8a;
-    --primary-dark: #152854;
-    --primary-light: #3563e0;
-    --accent-color: #4db8ff;
-    --text-color: #333;
-    --light-text: #666;
-    --lightest-text: #999;
-    --bg-color: #f8f9fa;
-    --light-bg: #ffffff;
-    --dark-bg: #e9ecef;
-    --border-color: #dee2e6;
-    --shadow: 0 2px 5px rgba(0,0,0,0.1);
+    --primary-color: #0A2746; /* Deep Blue from logo */
+    --primary-dark: #071F38;  /* Darker shade of Deep Blue */
+    /* --primary-light: #1E407C; /* Lighter shade of Deep Blue - can be added if needed */
+    --accent-color: #C0221A;   /* Lighter Red from logo */
+    --accent-dark: #A01C15;    /* Darker shade of Lighter Red */
+    
+    --text-color: #333333;
+    --light-text: #555555;     /* Adjusted for better harmony */
+    --lightest-text: #777777;  /* Adjusted for better harmony */
+    
+    --bg-color: #F6F1E8;       /* Cream from logo */
+    --light-bg: #FFFFFF;       /* White - for cards or contrasting sections */
+    --dark-bg: #EAE4DC;        /* A slightly darker, muted cream for sections like CTA */
+    
+    --text-color-on-primary: #F6F1E8; /* Cream for text on deep blue backgrounds */
+    --text-color-on-accent: #FFFFFF;  /* White for text on red backgrounds */
+    
+    --border-color: #D1CCC1;   /* Border color to complement cream */
+    --shadow: 0 2px 5px rgba(0,0,0,0.08); /* Softened shadow */
     --transition: all 0.3s ease;
 }
 
@@ -41,7 +47,7 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: 1rem;
     line-height: 1.2;
     font-weight: 700;
-    color: var(--text-color);
+    color: var(--primary-color); /* Headings primarily use the deep blue */
 }
 
 h1 {
@@ -63,13 +69,13 @@ p {
 }
 
 a {
-    color: var(--primary-color);
+    color: var(--accent-color); /* Links are now red */
     text-decoration: none;
     transition: var(--transition);
 }
 
 a:hover {
-    color: var(--primary-light);
+    color: var(--accent-dark); /* Darker red on hover */
 }
 
 ul, ol {
@@ -97,7 +103,7 @@ section {
 /* ---------- Header & Navigation ---------- */
 header {
     background-color: var(--primary-color);
-    color: white;
+    color: var(--text-color-on-primary);
     padding: 1rem 2rem;
     display: flex;
     justify-content: space-between;
@@ -109,11 +115,20 @@ header {
 }
 
 .logo {
-    font-size: 1.8rem;
+    font-size: 1.8rem; /* This will be overridden by image styles if an image is used */
     font-weight: bold;
-    color: white;
+    color: var(--text-color-on-primary);
     text-decoration: none;
+    display: flex; /* For vertical alignment of image if needed */
+    align-items: center;
 }
+
+.logo img {
+    max-height: 100px; /* Adjust as needed */
+    width: auto;
+    vertical-align: middle; /* Helps with alignment if text is next to it */
+}
+
 
 nav ul {
     display: flex;
@@ -126,33 +141,36 @@ nav ul li {
 }
 
 nav ul li a {
-    color: white;
+    color: var(--text-color-on-primary);
     text-decoration: none;
     font-weight: 500;
     padding: 0.5rem;
     transition: var(--transition);
+    opacity: 0.9;
 }
 
 nav ul li a:hover, 
 nav ul li a.active {
-    color: var(--accent-color);
+    color: var(--accent-color); /* Red for active/hover nav links */
+    opacity: 1;
 }
 
 /* ---------- Hero Section ---------- */
 .hero {
-    background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('/api/placeholder/1200/600');
+    background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('/images/hero.png'); /* Replace placeholder if you have a specific hero image */
     background-size: cover;
     background-position: center;
-    color: white;
+    color: var(--light-bg); /* White text on hero */
     text-align: center;
     padding: 8rem 2rem;
-    margin-bottom: 2rem;
+    margin-bottom: 2rem; /* Resetting margin as section has it */
+    margin-top: 0; /* Remove top margin if header is sticky */
 }
 
 .hero h1 {
     font-size: 3rem;
     margin-bottom: 1rem;
-    color: white;
+    color: var(--light-bg); /* White text for hero H1 */
 }
 
 .hero p {
@@ -164,8 +182,8 @@ nav ul li a.active {
 /* ---------- Buttons ---------- */
 .btn {
     display: inline-block;
-    background-color: var(--primary-color);
-    color: white;
+    background-color: var(--accent-color); /* Red button */
+    color: var(--text-color-on-accent);    /* White text on button */
     padding: 0.8rem 1.5rem;
     border-radius: 4px;
     text-decoration: none;
@@ -176,7 +194,8 @@ nav ul li a.active {
 }
 
 .btn:hover {
-    background-color: var(--primary-dark);
+    background-color: var(--accent-dark); /* Darker red on hover */
+    color: var(--text-color-on-accent);
     transform: translateY(-2px);
 }
 
@@ -193,27 +212,30 @@ nav ul li a.active {
     flex: 1;
     min-width: 300px;
     padding: 2rem;
-    background-color: var(--light-bg);
+    background-color: var(--light-bg); /* White background for feature cards */
     border-radius: 8px;
     box-shadow: var(--shadow);
+    border: 1px solid var(--border-color); /* Subtle border */
 }
 
 .feature h3 {
-    color: var(--primary-color);
+    color: var(--primary-color); /* Deep blue for feature headings */
     margin-top: 0;
 }
 
 /* ---------- Page Header ---------- */
 .page-header {
     background-color: var(--primary-color);
-    color: white;
+    color: var(--text-color-on-primary);
     padding: 3rem 0;
     margin-bottom: 2rem;
+    margin-top: 0;
 }
 
 .page-header h1 {
-    color: white;
+    color: var(--text-color-on-primary); /* Cream text */
     margin-bottom: 0;
+    text-align: center;
 }
 
 /* ---------- About Page ---------- */
@@ -243,13 +265,31 @@ nav ul li a.active {
 
 .values-list {
     margin: 1.5rem 0;
+    list-style-type: none; /* Removing default bullets for custom styling if desired */
+    padding-left: 0;
 }
 
 .values-list li {
     margin-bottom: 1rem;
+    padding-left: 1.5rem;
+    position: relative;
 }
 
-/* Team Section */
+.values-list li strong {
+    color: var(--primary-color);
+}
+
+/* Optional: Add a custom bullet point related to brand colors */
+.values-list li::before {
+    content: '✓'; /* Or use another symbol or SVG */
+    color: var(--accent-color);
+    position: absolute;
+    left: 0;
+    font-weight: bold;
+}
+
+
+/* Team Section (if you add it back) */
 .team-section {
     margin: 4rem 0;
 }
@@ -267,15 +307,21 @@ nav ul li a.active {
     max-width: 300px;
     text-align: center;
     margin-bottom: 2rem;
+    background-color: var(--light-bg);
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
 }
 
 .team-member img {
     border-radius: 50%;
     margin-bottom: 1rem;
+    border: 3px solid var(--accent-color); /* Accent border for team images */
 }
 
 .team-member h3 {
     margin: 0.5rem 0;
+    color: var(--primary-color);
 }
 
 .team-member p {
@@ -293,6 +339,10 @@ nav ul li a.active {
 .contact-form {
     flex: 1;
     min-width: 300px;
+    background-color: var(--light-bg);
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
 }
 
 .contact-info {
@@ -309,6 +359,7 @@ nav ul li a.active {
     display: block;
     margin-bottom: 0.5rem;
     font-weight: 500;
+    color: var(--primary-dark);
 }
 
 .form-group input,
@@ -320,7 +371,17 @@ nav ul li a.active {
     border-radius: 4px;
     font-size: 1rem;
     font-family: inherit;
+    background-color: #fff; /* Ensure form fields are white against cream bg */
 }
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(10, 39, 70, 0.2); /* Focus ring with primary color */
+}
+
 
 .form-group textarea {
     height: 150px;
@@ -337,28 +398,35 @@ nav ul li a.active {
     color: var(--primary-color);
 }
 
-.cta-box {
-    background-color: var(--primary-color);
-    color: white;
-    padding: 1.5rem;
+.cta-box { /* This is on the contact page */
+    background-color: var(--primary-dark); /* Darker blue for this specific box */
+    color: var(--text-color-on-primary);
+    padding: 2rem;
     border-radius: 8px;
     margin-top: 2rem;
+    text-align: center;
 }
 
 .cta-box h3 {
-    color: white;
+    color: var(--light-bg); /* White for better contrast on primary-dark */
     margin-top: 0;
+}
+
+.cta-box p {
+    color: var(--text-color-on-primary);
+    opacity: 0.9;
 }
 
 .phone-cta {
     font-size: 1.5rem;
     font-weight: bold;
     margin-top: 1rem;
+    color: var(--accent-color); /* Red for phone number emphasis */
 }
 
-/* ---------- CTA Section ---------- */
-.cta-section {
-    background-color: var(--dark-bg);
+/* ---------- CTA Section (Homepage) ---------- */
+.cta-section { /* This is on the homepage */
+    background-color: var(--dark-bg); /* Muted, darker cream */
     padding: 3rem;
     border-radius: 8px;
     text-align: center;
@@ -367,16 +435,17 @@ nav ul li a.active {
 
 .cta-section h2 {
     margin-top: 0;
+    color: var(--primary-color); /* Deep blue heading */
 }
 
-.cta-section .btn {
+.cta-section .btn { /* Button within this section already styled */
     margin-top: 1rem;
 }
 
 /* ---------- Footer ---------- */
 footer {
     background-color: var(--primary-color);
-    color: white;
+    color: var(--text-color-on-primary);
     padding-top: 3rem;
 }
 
@@ -396,13 +465,14 @@ footer {
 }
 
 .footer-section h3 {
-    color: white;
+    color: var(--light-bg); /* Brighter white/cream for footer headings */
     margin-bottom: 1.5rem;
 }
 
 .footer-section ul {
     list-style: none;
     margin: 0;
+    padding: 0;
 }
 
 .footer-section ul li {
@@ -410,20 +480,77 @@ footer {
 }
 
 .footer-section ul li a {
-    color: white;
+    color: var(--text-color-on-primary);
     opacity: 0.8;
 }
 
 .footer-section ul li a:hover {
     opacity: 1;
+    color: var(--accent-color); /* Red on hover for footer links */
 }
 
 .footer-bottom {
     text-align: center;
     padding: 1.5rem;
     margin-top: 3rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid rgba(246, 241, 232, 0.2); /* Lighter border using cream with opacity */
+    font-size: 0.9rem;
 }
+
+/* ---------- Footer Logo Styles ---------- */
+.footer-logo-img {
+    max-height: 70px; /* Adjust size as needed for the footer */
+    width: auto;
+    margin-bottom: 1rem; /* Add some space below the logo */
+    display: block; /* To allow margin auto to work if you want to center it */
+    /* margin-left: auto; /* Uncomment to center the logo within its section */
+    /* margin-right: auto; /* Uncomment to center the logo within its section */
+}
+
+/* Optional: If you want the footer section with the logo to be centered */
+/*
+.footer-content .footer-section:first-child {
+    text-align: center;
+}
+*/
+
+/* Adjusting existing footer styles if needed */
+footer {
+    background-color: var(--primary-color);
+    color: var(--text-color-on-primary);
+    padding-top: 3rem;
+    /* padding-bottom: 1rem; /* Ensure enough space at the very bottom if logo makes it taller */
+}
+
+.footer-section h3 {
+    color: var(--light-bg);
+    margin-bottom: 1rem; /* Adjusted from 1.5rem to give a bit more space if logo is above */
+}
+
+/* ---------- Services Page Specific ---------- */
+.services-section .service {
+    background-color: var(--light-bg);
+    padding: 2rem;
+    margin-bottom: 2rem;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border-color);
+}
+
+.services-section .service h2 {
+    color: var(--primary-color);
+    margin-top: 0;
+}
+
+.services-section .service ul {
+    list-style: disc; /* Standard bullets for services */
+    margin-left: 1.5rem;
+}
+
+.services-section .service ul li {
+    margin-bottom: 0.5rem;
+}
+
 
 /* ---------- Responsive Design ---------- */
 @media (max-width: 768px) {
@@ -434,15 +561,30 @@ footer {
     
     .logo {
         margin-bottom: 1rem;
+        justify-content: center; /* Center logo when stacked */
+    }
+    
+    .logo img {
+        max-height: 50px; /* Slightly smaller logo on mobile */
     }
     
     nav ul {
         flex-direction: column;
         text-align: center;
+        width: 100%;
     }
     
     nav ul li {
         margin: 0.5rem 0;
+        border-top: 1px solid rgba(246, 241, 232, 0.1); /* Separator for mobile nav items */
+    }
+    nav ul li:first-child {
+        border-top: none;
+    }
+
+    nav ul li a {
+        display: block; /* Make nav links full width for easier tapping */
+        padding: 0.8rem;
     }
     
     .hero {
@@ -477,6 +619,7 @@ footer {
     
     .footer-content {
         flex-direction: column;
+        text-align: center; /* Center footer content on mobile */
         gap: 2rem;
     }
     
@@ -488,6 +631,6 @@ footer {
 /* For larger screens */
 @media (min-width: 1200px) {
     .container {
-        padding: 2rem 0;
+        padding: 2rem 0; /* Remove side padding if max-width is handled by container */
     }
 }
