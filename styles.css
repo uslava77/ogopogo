@@ -12,23 +12,22 @@
 :root {
     --primary-color: #0A2746; /* Deep Blue from logo */
     --primary-dark: #071F38;  /* Darker shade of Deep Blue */
-    /* --primary-light: #1E407C; /* Lighter shade of Deep Blue - can be added if needed */
     --accent-color: #C0221A;   /* Lighter Red from logo */
     --accent-dark: #A01C15;    /* Darker shade of Lighter Red */
     
     --text-color: #333333;
-    --light-text: #555555;     /* Adjusted for better harmony */
-    --lightest-text: #777777;  /* Adjusted for better harmony */
+    --light-text: #555555;     
+    --lightest-text: #777777;  
     
     --bg-color: #F6F1E8;       /* Cream from logo */
-    --light-bg: #FFFFFF;       /* White - for cards or contrasting sections */
-    --dark-bg: #EAE4DC;        /* A slightly darker, muted cream for sections like CTA */
+    --light-bg: #FFFFFF;       
+    --dark-bg: #EAE4DC;        
     
-    --text-color-on-primary: #F6F1E8; /* Cream for text on deep blue backgrounds */
-    --text-color-on-accent: #FFFFFF;  /* White for text on red backgrounds */
+    --text-color-on-primary: #F6F1E8; 
+    --text-color-on-accent: #FFFFFF;  
     
-    --border-color: #D1CCC1;   /* Border color to complement cream */
-    --shadow: 0 2px 5px rgba(0,0,0,0.08); /* Softened shadow */
+    --border-color: #D1CCC1;   
+    --shadow: 0 2px 5px rgba(0,0,0,0.08); 
     --transition: all 0.3s ease;
 }
 
@@ -47,7 +46,7 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: 1rem;
     line-height: 1.2;
     font-weight: 700;
-    color: var(--primary-color); /* Headings primarily use the deep blue */
+    color: var(--primary-color); 
 }
 
 h1 {
@@ -69,13 +68,13 @@ p {
 }
 
 a {
-    color: var(--accent-color); /* Links are now red */
+    color: var(--accent-color); 
     text-decoration: none;
     transition: var(--transition);
 }
 
 a:hover {
-    color: var(--accent-dark); /* Darker red on hover */
+    color: var(--accent-dark); 
 }
 
 ul, ol {
@@ -115,32 +114,73 @@ header {
 }
 
 .logo {
-    font-size: 1.8rem; /* This will be overridden by image styles if an image is used */
+    font-size: 1.8rem; 
     font-weight: bold;
     color: var(--text-color-on-primary);
     text-decoration: none;
-    display: flex; /* For vertical alignment of image if needed */
+    display: flex; 
     align-items: center;
+    flex-shrink: 0; 
+    flex-grow: 0;
 }
 
 .logo img {
-    max-height: 100px; /* Adjust as needed */
+    max-height: 70px; 
     width: auto;
-    vertical-align: middle; /* Helps with alignment if text is next to it */
+    vertical-align: middle;
 }
 
+.header-contact {
+    position: absolute;         /* Takes the element out of the normal flow */
+    left: 50%;                  /* Positions the left edge of the element at the viewport's horizontal center */
+    transform: translateX(-50%); /* Shifts the element left by half of its own width, centering it */
+    
+    /* Remove flex-specific properties that were for centering it between logo/nav */
+    flex-grow: 0;               /* Was 1, not needed for absolute positioning */
+    /* justify-content: center; /* Not needed for this type of centering */
+    
+    /* Keep text-align for the link inside, or use display: block on .header-phone */
+    text-align: center;
+    
+    /* Ensure it doesn't have margins that push it around */
+    margin-left: 0;
+    padding-right: 0; /* Reset padding if it was for specific flex layout */
 
-nav ul {
+    /* Other existing styles like display:flex, align-items:center can be simplified if no longer needed for internal alignment,
+       or kept if you have multiple items inside .header-contact you still want to flex.
+       If .header-phone is the only child, .header-contact can often be simpler: */
+    display: block; /* Or 'inline-block' depending on desired behavior with padding */
+}
+
+.header-phone {
+    color: var(--text-color-on-primary);
+    font-weight: 500;
+    text-decoration: none;
+    font-size: 1.1rem; /* MODIFIED - Slightly larger for desktop prominence */
+    white-space: nowrap; 
+    padding: 0 1rem; /* ADDED - Some padding around the phone number */
+    display: inline-block;
+}
+
+.header-phone:hover {
+    color: var(--accent-color);
+}
+
+nav.main-nav {
+    flex-shrink: 0; /* ADDED - Prevent nav from shrinking */
+}
+
+nav.main-nav ul {
     display: flex;
     list-style: none;
     margin: 0;
 }
 
-nav ul li {
+nav.main-nav ul li {
     margin-left: 1.5rem;
 }
 
-nav ul li a {
+nav.main-nav ul li a {
     color: var(--text-color-on-primary);
     text-decoration: none;
     font-weight: 500;
@@ -149,28 +189,59 @@ nav ul li a {
     opacity: 0.9;
 }
 
-nav ul li a:hover, 
-nav ul li a.active {
-    color: var(--accent-color); /* Red for active/hover nav links */
+nav.main-nav ul li a:hover, 
+nav.main-nav ul li a.active {
+    color: var(--accent-color); 
     opacity: 1;
 }
 
+.hamburger-menu {
+    display: none; 
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    z-index: 101; 
+    margin-left: 1rem; /* Space from nav or phone if they were visible */
+    flex-shrink: 0; /* ADDED - Prevent hamburger from shrinking */
+}
+
+.hamburger-menu span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background-color: var(--text-color-on-primary);
+    margin: 5px 0;
+    transition: var(--transition);
+}
+
+.hamburger-menu.is-active span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+.hamburger-menu.is-active span:nth-child(2) {
+    opacity: 0;
+}
+.hamburger-menu.is-active span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+
 /* ---------- Hero Section ---------- */
 .hero {
-    background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('images/hero.png'); /* Replace placeholder if you have a specific hero image */
+    background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('images/hero.png');
     background-size: cover;
     background-position: center;
-    color: var(--light-bg); /* White text on hero */
+    color: var(--light-bg);
     text-align: center;
     padding: 8rem 2rem;
-    margin-bottom: 2rem; /* Resetting margin as section has it */
-    margin-top: 0; /* Remove top margin if header is sticky */
+    margin-bottom: 2rem;
+    margin-top: 0;
 }
 
 .hero h1 {
     font-size: 3rem;
     margin-bottom: 1rem;
-    color: var(--light-bg); /* White text for hero H1 */
+    color: var(--light-bg);
 }
 
 .hero p {
@@ -182,8 +253,8 @@ nav ul li a.active {
 /* ---------- Buttons ---------- */
 .btn {
     display: inline-block;
-    background-color: var(--accent-color); /* Red button */
-    color: var(--text-color-on-accent);    /* White text on button */
+    background-color: var(--accent-color);
+    color: var(--text-color-on-accent);
     padding: 0.8rem 1.5rem;
     border-radius: 4px;
     text-decoration: none;
@@ -194,7 +265,7 @@ nav ul li a.active {
 }
 
 .btn:hover {
-    background-color: var(--accent-dark); /* Darker red on hover */
+    background-color: var(--accent-dark);
     color: var(--text-color-on-accent);
     transform: translateY(-2px);
 }
@@ -212,14 +283,14 @@ nav ul li a.active {
     flex: 1;
     min-width: 300px;
     padding: 2rem;
-    background-color: var(--light-bg); /* White background for feature cards */
+    background-color: var(--light-bg);
     border-radius: 8px;
     box-shadow: var(--shadow);
-    border: 1px solid var(--border-color); /* Subtle border */
+    border: 1px solid var(--border-color);
 }
 
 .feature h3 {
-    color: var(--primary-color); /* Deep blue for feature headings */
+    color: var(--primary-color);
     margin-top: 0;
 }
 
@@ -233,7 +304,7 @@ nav ul li a.active {
 }
 
 .page-header h1 {
-    color: var(--text-color-on-primary); /* Cream text */
+    color: var(--text-color-on-primary);
     margin-bottom: 0;
     text-align: center;
 }
@@ -265,7 +336,7 @@ nav ul li a.active {
 
 .values-list {
     margin: 1.5rem 0;
-    list-style-type: none; /* Removing default bullets for custom styling if desired */
+    list-style-type: none;
     padding-left: 0;
 }
 
@@ -279,15 +350,13 @@ nav ul li a.active {
     color: var(--primary-color);
 }
 
-/* Optional: Add a custom bullet point related to brand colors */
 .values-list li::before {
-    content: '✓'; /* Or use another symbol or SVG */
+    content: '✓';
     color: var(--accent-color);
     position: absolute;
     left: 0;
     font-weight: bold;
 }
-
 
 /* Team Section (if you add it back) */
 .team-section {
@@ -316,7 +385,7 @@ nav ul li a.active {
 .team-member img {
     border-radius: 50%;
     margin-bottom: 1rem;
-    border: 3px solid var(--accent-color); /* Accent border for team images */
+    border: 3px solid var(--accent-color);
 }
 
 .team-member h3 {
@@ -371,7 +440,7 @@ nav ul li a.active {
     border-radius: 4px;
     font-size: 1rem;
     font-family: inherit;
-    background-color: #fff; /* Ensure form fields are white against cream bg */
+    background-color: #fff;
 }
 
 .form-group input:focus,
@@ -379,14 +448,29 @@ nav ul li a.active {
 .form-group select:focus {
     border-color: var(--primary-color);
     outline: none;
-    box-shadow: 0 0 0 2px rgba(10, 39, 70, 0.2); /* Focus ring with primary color */
+    box-shadow: 0 0 0 2px rgba(10, 39, 70, 0.2);
 }
-
 
 .form-group textarea {
     height: 150px;
     resize: vertical;
 }
+
+.required-asterisk {
+    color: var(--accent-color);
+    margin-left: 2px; 
+    font-weight: bold; 
+}
+
+.required-note {
+    font-size: 0.9rem;
+    color: var(--light-text);
+    margin-bottom: 1.5rem; 
+}
+.required-note .required-asterisk { 
+    font-size: inherit; 
+}
+
 
 /* Contact Info Styles */
 .info-item {
@@ -398,8 +482,8 @@ nav ul li a.active {
     color: var(--primary-color);
 }
 
-.cta-box { /* This is on the contact page */
-    background-color: var(--primary-dark); /* Darker blue for this specific box */
+.cta-box {
+    background-color: var(--primary-dark);
     color: var(--text-color-on-primary);
     padding: 2rem;
     border-radius: 8px;
@@ -408,7 +492,7 @@ nav ul li a.active {
 }
 
 .cta-box h3 {
-    color: var(--light-bg); /* White for better contrast on primary-dark */
+    color: var(--light-bg);
     margin-top: 0;
 }
 
@@ -421,12 +505,19 @@ nav ul li a.active {
     font-size: 1.5rem;
     font-weight: bold;
     margin-top: 1rem;
-    color: var(--accent-color); /* Red for phone number emphasis */
+    color: var(--accent-color);
+}
+.phone-cta a { 
+    color: var(--accent-color);
+}
+.phone-cta a:hover {
+    color: var(--accent-dark);
 }
 
+
 /* ---------- CTA Section (Homepage) ---------- */
-.cta-section { /* This is on the homepage */
-    background-color: var(--dark-bg); /* Muted, darker cream */
+.cta-section {
+    background-color: var(--dark-bg);
     padding: 3rem;
     border-radius: 8px;
     text-align: center;
@@ -435,10 +526,10 @@ nav ul li a.active {
 
 .cta-section h2 {
     margin-top: 0;
-    color: var(--primary-color); /* Deep blue heading */
+    color: var(--primary-color);
 }
 
-.cta-section .btn { /* Button within this section already styled */
+.cta-section .btn {
     margin-top: 1rem;
 }
 
@@ -465,8 +556,8 @@ footer {
 }
 
 .footer-section h3 {
-    color: var(--light-bg); /* Brighter white/cream for footer headings */
-    margin-bottom: 1.5rem;
+    color: var(--light-bg);
+    margin-bottom: 1rem;
 }
 
 .footer-section ul {
@@ -486,45 +577,22 @@ footer {
 
 .footer-section ul li a:hover {
     opacity: 1;
-    color: var(--accent-color); /* Red on hover for footer links */
+    color: var(--accent-color);
 }
 
 .footer-bottom {
     text-align: center;
     padding: 1.5rem;
     margin-top: 3rem;
-    border-top: 1px solid rgba(246, 241, 232, 0.2); /* Lighter border using cream with opacity */
+    border-top: 1px solid rgba(246, 241, 232, 0.2);
     font-size: 0.9rem;
 }
 
-/* ---------- Footer Logo Styles ---------- */
 .footer-logo-img {
-    max-height: 70px; /* Adjust size as needed for the footer */
+    max-height: 70px;
     width: auto;
-    margin-bottom: 1rem; /* Add some space below the logo */
-    display: block; /* To allow margin auto to work if you want to center it */
-    /* margin-left: auto; /* Uncomment to center the logo within its section */
-    /* margin-right: auto; /* Uncomment to center the logo within its section */
-}
-
-/* Optional: If you want the footer section with the logo to be centered */
-/*
-.footer-content .footer-section:first-child {
-    text-align: center;
-}
-*/
-
-/* Adjusting existing footer styles if needed */
-footer {
-    background-color: var(--primary-color);
-    color: var(--text-color-on-primary);
-    padding-top: 3rem;
-    /* padding-bottom: 1rem; /* Ensure enough space at the very bottom if logo makes it taller */
-}
-
-.footer-section h3 {
-    color: var(--light-bg);
-    margin-bottom: 1rem; /* Adjusted from 1.5rem to give a bit more space if logo is above */
+    margin-bottom: 1rem;
+    display: block; /* Important for margin auto to work for centering */
 }
 
 /* ---------- Services Page Specific ---------- */
@@ -543,7 +611,7 @@ footer {
 }
 
 .services-section .service ul {
-    list-style: disc; /* Standard bullets for services */
+    list-style: disc;
     margin-left: 1.5rem;
 }
 
@@ -555,36 +623,80 @@ footer {
 /* ---------- Responsive Design ---------- */
 @media (max-width: 768px) {
     header {
-        flex-direction: column;
-        padding: 1rem;
+        flex-direction: row; 
+        justify-content: space-between; 
+        padding: 0.75rem 1rem; /* MODIFIED - Slightly reduced padding for mobile header */
     }
     
     .logo {
-        margin-bottom: 1rem;
-        justify-content: center; /* Center logo when stacked */
+        margin-bottom: 0; 
+        margin-right: auto; /* MODIFIED - Push other items (phone, hamburger) to the right */
     }
     
     .logo img {
-        max-height: 50px; /* Slightly smaller logo on mobile */
+        max-height: 40px; /* MODIFIED - Slightly smaller logo on mobile */
+    }
+
+    .header-contact {
+        display: flex; /* MODIFIED - Ensure it's displayed */
+        flex-grow: 0; /* MODIFIED - Don't let it grow excessively on mobile */
+        justify-content: center; /* Keep it centered if space allows, or it will be next to logo */
+        order: 1; /* ADDED - Attempt to place it after logo, before hamburger if needed, but flex order with margin auto on logo is better*/
+        margin-left: 1rem; /* ADDED - Space from logo */
+        margin-right: 1rem; /* ADDED - Space before hamburger */
+    }
+    .header-phone {
+        font-size: 0.85rem; /* MODIFIED - Smaller font for mobile header phone */
+        padding: 0 0.5rem; /* MODIFIED - Reduced padding */
     }
     
-    nav ul {
+    nav.main-nav {
+        display: none; 
+        position: absolute;
+        top: 100%; 
+        left: 0;
+        right: 0; 
+        width: 100%;
+        background-color: var(--primary-dark); 
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        padding-top: 0.5rem; 
+        padding-bottom: 0.5rem; 
+        border-top: 1px solid rgba(246, 241, 232, 0.15); 
+    }
+
+    nav.main-nav.is-active {
+        display: block; 
+    }
+    
+    nav.main-nav ul {
         flex-direction: column;
-        text-align: center;
+        text-align: left; 
         width: 100%;
     }
     
-    nav ul li {
-        margin: 0.5rem 0;
-        border-top: 1px solid rgba(246, 241, 232, 0.1); /* Separator for mobile nav items */
+    nav.main-nav ul li {
+        margin: 0; 
+        border-top: 1px solid rgba(246, 241, 232, 0.1); 
     }
-    nav ul li:first-child {
+    nav.main-nav ul li:first-child {
         border-top: none;
     }
 
-    nav ul li a {
-        display: block; /* Make nav links full width for easier tapping */
-        padding: 0.8rem;
+    nav.main-nav ul li a {
+        display: block; 
+        padding: 0.8rem 1rem; 
+        color: var(--text-color-on-primary); 
+    }
+    nav.main-nav ul li a:hover,
+    nav.main-nav ul li a.active {
+        background-color: var(--accent-color);
+        color: var(--text-color-on-accent);
+    }
+
+    .hamburger-menu {
+        display: block; 
+        order: 2; /* ADDED - Ensure hamburger is last item in flow */
+        margin-left: 0; /* Reset margin if it was for desktop */
     }
     
     .hero {
@@ -596,7 +708,7 @@ footer {
     }
     
     .container {
-        padding: 1rem;
+        padding: 1.5rem; 
     }
     
     .features,
@@ -619,18 +731,23 @@ footer {
     
     .footer-content {
         flex-direction: column;
-        text-align: center; /* Center footer content on mobile */
+        text-align: center; 
         gap: 2rem;
     }
     
     .footer-section {
         min-width: 100%;
     }
+
+    .footer-logo-img {
+        margin-left: auto;   /* ADDED for centering */
+        margin-right: auto;  /* ADDED for centering */
+    }
 }
 
 /* For larger screens */
 @media (min-width: 1200px) {
     .container {
-        padding: 2rem 0; /* Remove side padding if max-width is handled by container */
+        padding: 2rem 0; 
     }
 }

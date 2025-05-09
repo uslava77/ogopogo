@@ -4,9 +4,9 @@
  */
 
 document.addEventListener('DOMContentLoaded', function() {
-    loadHeaderAndFooter(); // Call the function to load header and footer
-    // Initialize other components after header/footer are potentially loaded
-    // However, for nav active class, it's better to do it after header is loaded.
+    loadHeaderAndFooter(); 
+    initializeContactForm(); 
+    addScrollAnimations();   
 });
 
 async function loadHeaderAndFooter() {
@@ -19,7 +19,7 @@ async function loadHeaderAndFooter() {
             if (response.ok) {
                 const headerHTML = await response.text();
                 headerPlaceholder.innerHTML = headerHTML;
-                initializeNavigation(); // Initialize nav after header is loaded
+                initializeNavigation(); // Initialize nav & hamburger AFTER header is loaded
             } else {
                 console.error('Failed to load header:', response.status);
                 headerPlaceholder.innerHTML = '<p style="color:red;">Error loading header. Please check console.</p>';
@@ -32,7 +32,7 @@ async function loadHeaderAndFooter() {
 
     if (footerPlaceholder) {
         try {
-            const response = await fetch('footer.html'); // Use the cleaned footer.html
+            const response = await fetch('footer.html'); 
             if (response.ok) {
                 const footerHTML = await response.text();
                 footerPlaceholder.innerHTML = footerHTML;
@@ -45,9 +45,6 @@ async function loadHeaderAndFooter() {
             footerPlaceholder.innerHTML = '<p style="color:red;">Error loading footer. Please check console.</p>';
         }
     }
-    // Call other initializations that depend on footer content if any
-    // initializeContactForm(); // This can be called here or in DOMContentLoaded directly
-    // addScrollAnimations(); // This can be called here or in DOMContentLoaded directly
 }
 
 
@@ -55,18 +52,47 @@ async function loadHeaderAndFooter() {
  * Handle mobile navigation toggling and active class
  */
 function initializeNavigation() {
-    // This function can be expanded later to include a mobile nav toggle button
     const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-    const navLinks = document.querySelectorAll('#header-placeholder nav ul li a'); // Target links within loaded header
+    
+    // This assumes header.html has been loaded and its content is in headerPlaceholder
+    const headerElement = document.querySelector('#header-placeholder header'); // Get the actual header element
+
+    if (!headerElement) {
+        // console.error("Header element not found for navigation initialization.");
+        return; // Exit if header isn't there
+    }
+
+    const navLinks = headerElement.querySelectorAll('nav.main-nav ul li a'); 
+    const hamburgerButton = headerElement.querySelector('.hamburger-menu');
+    const mainNav = headerElement.querySelector('nav.main-nav');
 
     navLinks.forEach(link => {
         const linkPage = link.getAttribute('href');
-        if (linkPage === currentPage) {
+        // Handle active class for index.html specifically if path is "/" or "/index.html"
+        let isActive = false;
+        if (linkPage === 'index.html' && (currentPage === '' || currentPage === 'index.html')) {
+            isActive = true;
+        } else if (linkPage !== 'index.html' && linkPage === currentPage) {
+            isActive = true;
+        }
+
+        if (isActive) {
             link.classList.add('active');
         } else {
-            link.classList.remove('active'); // Ensure others are not active
+            link.classList.remove('active'); 
         }
     });
+
+    // Hamburger Menu Toggle
+    if (hamburgerButton && mainNav) {
+        hamburgerButton.addEventListener('click', () => {
+            const isActive = hamburgerButton.classList.toggle('is-active');
+            mainNav.classList.toggle('is-active');
+            hamburgerButton.setAttribute('aria-expanded', isActive);
+        });
+    } else {
+        // console.warn("Hamburger button or main navigation not found in the loaded header.");
+    }
 }
 
 /**
@@ -91,7 +117,8 @@ function initializeContactForm() {
                 return;
             }
             
-            alert('Thank you for your message! We will get back to you soon.');
+            // For now, just an alert. Replace with actual submission logic if needed.
+            alert('Thank you for your message! We will get back to you soon.'); 
             contactForm.reset();
         });
     }
@@ -118,6 +145,8 @@ function validateForm(formData) {
         alert('Please enter your message.');
         return false;
     }
+    // Phone number is not strictly required by the HTML, so no validation for it here
+    // unless you add 'required' to the HTML and corresponding validation logic.
     return true;
 }
 
@@ -125,7 +154,7 @@ function validateForm(formData) {
  * Add scroll animations for better user experience
  */
 function addScrollAnimations() {
-    const revealElements = document.querySelectorAll('.scroll-reveal');
+    const revealElements = document.querySelectorAll('.scroll-reveal'); // Ensure you have this class on elements
     
     if (revealElements.length > 0) {
         const revealOnScroll = () => {
@@ -133,19 +162,15 @@ function addScrollAnimations() {
                 const elementTop = element.getBoundingClientRect().top;
                 const windowHeight = window.innerHeight;
                 
-                if (elementTop < windowHeight - 100) {
+                if (elementTop < windowHeight - 100) { // Adjust offset as needed
                     element.classList.add('revealed');
                 }
             });
         };
         window.addEventListener('scroll', revealOnScroll);
-        revealOnScroll(); // Initial check
+        revealOnScroll(); // Initial check for elements already in view
     }
 }
 
-// Call functions that don't depend on async loaded content directly
-document.addEventListener('DOMContentLoaded', function() {
-    // loadHeaderAndFooter is already called above
-    initializeContactForm(); // Safe to call here
-    addScrollAnimations();   // Safe to call here
-});
+// Note: DOMContentLoaded listeners are already set at the top for functions
+// that don't directly depend on async loaded content or are called from loadHeaderAndFooter.
