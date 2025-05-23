@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
-    loadHeaderAndFooter(); 
-    initializeContactForm(); 
+    loadHeaderAndFooter();
+    initializeContactForm();
     addScrollAnimations();
     initializeImageGallery();
 });
@@ -15,7 +15,7 @@ async function loadHeaderAndFooter() {
             if (response.ok) {
                 const headerHTML = await response.text();
                 headerPlaceholder.innerHTML = headerHTML;
-                initializeNavigation(); 
+                initializeNavigation();
             } else {
                 console.error('Failed to load header:', response.status);
                 headerPlaceholder.innerHTML = '<p style="color:red;">Error loading header. Please check console.</p>';
@@ -28,7 +28,7 @@ async function loadHeaderAndFooter() {
 
     if (footerPlaceholder) {
         try {
-            const response = await fetch('footer.html'); 
+            const response = await fetch('footer.html');
             if (response.ok) {
                 const footerHTML = await response.text();
                 footerPlaceholder.innerHTML = footerHTML;
@@ -43,21 +43,15 @@ async function loadHeaderAndFooter() {
     }
 }
 
-
-/**
- * Handle mobile navigation toggling and active class
- */
 function initializeNavigation() {
     const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-    
     const headerElement = document.querySelector('#header-placeholder header');
 
     if (!headerElement) {
-        // console.error("Header element not found for navigation initialization.");
         return;
     }
 
-    const navLinks = headerElement.querySelectorAll('nav.main-nav ul li a'); 
+    const navLinks = headerElement.querySelectorAll('nav.main-nav ul li a');
     const hamburgerButton = headerElement.querySelector('.hamburger-menu');
     const mainNav = headerElement.querySelector('nav.main-nav');
 
@@ -73,25 +67,19 @@ function initializeNavigation() {
         if (isActive) {
             link.classList.add('active');
         } else {
-            link.classList.remove('active'); 
+            link.classList.remove('active');
         }
     });
 
-    // Hamburger Menu Toggle
     if (hamburgerButton && mainNav) {
         hamburgerButton.addEventListener('click', () => {
             const isActive = hamburgerButton.classList.toggle('is-active');
             mainNav.classList.toggle('is-active');
             hamburgerButton.setAttribute('aria-expanded', isActive);
         });
-    } else {
-        // console.warn("Hamburger button or main navigation not found in the loaded header.");
     }
 }
 
-/**
- * Handle contact form submission
- */
 function initializeContactForm() {
     const contactForm = document.getElementById('contactForm');
     
@@ -111,15 +99,12 @@ function initializeContactForm() {
                 return;
             }
             
-            alert('Thank you for your message! We will get back to you soon.'); 
+            alert('Thank you for your message! We will get back to you soon.');
             contactForm.reset();
         });
     }
 }
 
-/**
- * Validate form data
- */
 function validateForm(formData) {
     if (!formData.name.trim()) {
         alert('Please enter your name.');
@@ -141,9 +126,6 @@ function validateForm(formData) {
     return true;
 }
 
-/**
- * Add scroll animations for better user experience
- */
 function addScrollAnimations() {
     const revealElements = document.querySelectorAll('.scroll-reveal');
     
@@ -163,9 +145,6 @@ function addScrollAnimations() {
     }
 }
 
-/**
- * Initialize the image gallery with scroll and lightbox functionality
- */
 function initializeImageGallery() {
     const galleryWrapper = document.querySelector('.gallery-wrapper');
     if (!galleryWrapper) {
@@ -181,9 +160,7 @@ function initializeImageGallery() {
     const lightboxClose = lightbox ? lightbox.querySelector('.lightbox-close') : null;
     const lightboxCaption = lightbox ? lightbox.querySelector('.lightbox-caption') : null;
 
-    if (!galleryContainer || !scrollLeftButton || !scrollRightButton) {
-        // console.warn("Gallery scroll components not fully found.");
-    } else {
+    if (galleryContainer && scrollLeftButton && scrollRightButton) {
         const scrollAmount = 300;
 
         scrollLeftButton.addEventListener('click', () => {
@@ -221,8 +198,5 @@ function initializeImageGallery() {
                 lightboxCaption.textContent = '';
             }
         });
-
-    } else {
-        // console.warn("Lightbox components or gallery items not fully found.");
     }
 }
