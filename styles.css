@@ -658,6 +658,169 @@ footer {
     margin-bottom: 0.5rem;
 }
 
+/* ---------- Image Gallery Section ---------- */
+.image-gallery-section {
+    margin: 3rem 0;
+    /* background-color: var(--dark-bg); /* Optional: to give the section a distinct background */
+    /* padding: 2rem 0; /* Optional: if using a distinct background */
+}
+
+.image-gallery-section h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: var(--primary-color);
+}
+
+.gallery-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative; /* For absolute positioning of buttons if needed, or just for structure */
+}
+
+.gallery-container {
+    display: flex;
+    overflow-x: hidden; /* Changed from auto/scroll to hidden; JS will handle scrolling */
+    scroll-behavior: smooth; /* For smooth scrolling via JS */
+    width: 80%; /* Adjust width as needed, allowing space for buttons if outside */
+    margin: 0 10px; /* Space between container and buttons if buttons are outside this element */
+    padding-bottom: 1rem; /* Space for scrollbar if it were visible, or just padding */
+}
+
+.gallery-item {
+    flex: 0 0 auto; /* Prevents shrinking/growing, basis is auto */
+    width: 280px; /* Fixed width for items, adjust as needed */
+    height: 200px; /* Fixed height for items, adjust as needed */
+    margin-right: 1rem;
+    position: relative; /* For caption positioning */
+    overflow: hidden; /* Ensures caption doesn't spill if image is smaller */
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    cursor: pointer; /* Indicates items are interactive (for hover) */
+}
+
+.gallery-item:last-child {
+    margin-right: 0;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures image covers the item area, cropping if necessary */
+    display: block;
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+}
+
+.gallery-item:hover img {
+    transform: scale(1.05); /* Slight zoom on hover */
+}
+
+.gallery-item-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(10, 39, 70, 0.85); /* Semi-transparent primary color */
+    color: var(--text-color-on-primary);
+    text-align: center;
+    padding: 0.5rem;
+    font-size: 0.9rem;
+    opacity: 0; /* Hidden by default */
+    transition: opacity 0.3s ease;
+    border-bottom-left-radius: 8px; /* Match item's border radius */
+    border-bottom-right-radius: 8px;
+}
+
+.gallery-item:hover .gallery-item-caption {
+    opacity: 1; /* Show caption on hover */
+}
+
+.gallery-scroll-btn {
+    background-color: var(--primary-color);
+    color: var(--text-color-on-primary);
+    border: none;
+    padding: 0.8rem 1rem; /* Adjust padding for button size */
+    font-size: 1.5rem; /* Size of arrow */
+    line-height: 1; /* Ensure arrow is centered vertically */
+    cursor: pointer;
+    border-radius: 50%; /* Circular buttons */
+    transition: background-color 0.3s ease;
+    box-shadow: var(--shadow);
+    width: 40px;  /* Fixed width */
+    height: 40px; /* Fixed height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10; /* Ensure buttons are above gallery items if overlapping */
+}
+
+.gallery-scroll-btn:hover {
+    background-color: var(--accent-color);
+}
+
+.gallery-scroll-btn.left {
+    margin-right: 10px; /* Space between button and gallery */
+}
+
+.gallery-scroll-btn.right {
+    margin-left: 10px; /* Space between button and gallery */
+}
+
+/* ---------- Lightbox ---------- */
+.lightbox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent black background */
+    display: none; /* Hidden by default */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Ensure it's on top of everything */
+ }
+ 
+ .lightbox.active {
+    display: flex;
+ }
+ 
+ .lightbox-image {
+    max-width: 90%;
+    max-height: 80%;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: var(--shadow-large);
+ }
+ 
+ .lightbox-close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    color: var(--text-color-on-dark);
+    font-size: 3rem;
+    font-weight: bold;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+ }
+ 
+ .lightbox-close:hover {
+    opacity: 1;
+ }
+ 
+ .lightbox-caption {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--text-color-on-dark);
+    text-align: center;
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 5px;
+ }
 
 /* ---------- Responsive Design ---------- */
 @media (max-width: 768px) {
@@ -781,6 +944,45 @@ footer {
     .footer-logo-img {
         margin-left: auto;   /* ADDED for centering */
         margin-right: auto;  /* ADDED for centering */
+    }
+
+    nav.main-nav ul li.dropdown .dropbtn {
+        /* On mobile, main nav items are block, ensure dropbtn behaves similarly */
+        display: block;
+        padding: 0.8rem 1rem; /* Match other mobile nav links */
+        /* No direct hover effect for dropdown on mobile, handled by main nav styling */
+    }
+    
+    nav.main-nav.is-active ul li.dropdown .dropbtn {
+        /* When nav is active, allow click/tap to show dropdown items if JS is added later for click */
+        /* For now, it will behave like other links in the column */
+    }
+
+    nav.main-nav ul li.dropdown .dropdown-content {
+        position: static; /* Remove absolute positioning for mobile */
+        display: block; /* Always show dropdown items as part of the column flow */
+        background-color: transparent; /* Inherit background from nav.main-nav */
+        box-shadow: none; /* Remove shadow */
+        min-width: 100%;
+        border-top: none; /* Remove border specific to desktop dropdown */
+    }
+
+    nav.main-nav ul li.dropdown .dropdown-content a {
+        padding: 0.8rem 1.5rem; /* Indent slightly or match other mobile links */
+        /* Ensure styles match mobile nav links, e.g., border-top if other li have it */
+        border-top: 1px solid rgba(246, 241, 232, 0.05); /* Lighter border for sub-items */
+    }
+    
+    nav.main-nav ul li.dropdown .dropdown-content a:hover {
+         background-color: var(--accent-color); /* Consistent hover */
+         color: var(--text-color-on-accent);
+    }
+
+    /* Hide desktop hover effect for the main "Services" item on mobile if it's just a label */
+    nav.main-nav.is-active ul li.dropdown:hover > a.dropbtn { /* > a.dropbtn targets only the main Services link */
+        /* background-color: transparent; /* Prevent hover on the "Services" text itself if it's not a link */
+        /* color: var(--text-color-on-primary); */
+        /* opacity: 0.9; */
     }
 }
 

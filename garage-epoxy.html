@@ -40,7 +40,41 @@
       </div>
     </section>
   </div>
-
+  <section class="image-gallery-section scroll-reveal">
+    <div class="container">
+      <h2>Gallery</h2>
+      <div class="gallery-wrapper">
+        <button class="gallery-scroll-btn left" aria-label="Scroll left">&lt;</button>
+        <div class="gallery-container">
+          <div class="gallery-item">
+            <a href="images/domino-sample.jpg" data-lightbox="gallery-images" data-caption="Domino">
+              <img src="images/domino-sample.jpg" alt="Domino Color Sample">
+              <div class="gallery-item-caption">Domino</div>
+            </a>
+          </div>
+          <div class="gallery-item">
+            <a href="images/shoreline-sample.jpg" data-lightbox="gallery-images" data-caption="Shoreline">
+              <img src="images/shoreline-sample.jpg" alt="Shoreline Color Sample">
+              <div class="gallery-item-caption">Shoreline</div>
+            </a>
+          </div>
+          <div class="gallery-item">
+            <a href="images/garage-example.jpg" data-lightbox="gallery-images" data-caption="Garage Example">
+              <img src="images/garage-example.jpg" alt="Garage Floor Example">
+              <div class="gallery-item-caption">Garage Example</div>
+            </a>
+          </div>
+        </div>
+        <button class="gallery-scroll-btn right" aria-label="Scroll right">&gt;</button>
+      </div>
+    </div>
+  </section>
+ 
+  <div id="lightbox" class="lightbox">
+    <span class="lightbox-close">&times;</span>
+    <img src="" alt="Lightbox Image" class="lightbox-image">
+    <div class="lightbox-caption"></div>
+  </div>
   <div id="footer-placeholder"></div>
   <script src="script.js"></script>
 </body>
