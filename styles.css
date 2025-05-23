@@ -225,6 +225,45 @@ nav.main-nav ul li a.active {
     transform: translateY(-8px) rotate(-45deg);
 }
 
+nav.main-nav ul li.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+nav.main-nav ul li.dropdown .dropbtn {
+    /* Inherits general link styling, add specifics if needed */
+    cursor: pointer; /* Optional: if you make it clickable for JS later */
+}
+
+nav.main-nav ul li.dropdown .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: var(--primary-dark); /* Match dropdown bg to header or slightly darker */
+    min-width: 200px; /* Adjust as needed */
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    border-top: 1px solid var(--accent-color); /* Optional: for a bit of separation */
+}
+
+nav.main-nav ul li.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+nav.main-nav ul li.dropdown .dropdown-content a {
+    color: var(--text-color-on-primary);
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left; /* Ensure text aligns left */
+    opacity: 0.9; /* Match other nav links */
+}
+
+nav.main-nav ul li.dropdown .dropdown-content a:hover {
+    background-color: var(--accent-color); /* Highlight on hover */
+    color: var(--text-color-on-accent); /* Match other nav link hover text */
+    opacity: 1;
+}
+
 
 /* ---------- Hero Section ---------- */
 .hero {
